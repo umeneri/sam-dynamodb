@@ -58,7 +58,7 @@ Resources:
     Type: AWS::Serverless::Function
   QiitaTrendFunction:
     Properties:
-      CodeUri: s3://sam-cli-helloworld-backet/ce0998cd0aa3a3f0c73b3e968d81188d
+      CodeUri: s3://sam-cli-helloworld-backet/f82e205051c942a4fb22e31c032fe20a
       Environment:
         Variables:
           PARAM1: VALUE
