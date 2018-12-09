@@ -24,6 +24,22 @@ Outputs:
       Fn::GetAtt:
       - HelloWorldFunctionRole
       - Arn
+  QiitaTrendApi:
+    Description: API Gateway endpoint URL for Prod stage for Hello World function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/
+  QiitaTrendFunction:
+    Description: Hello World Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - QiitaTrendFunction
+      - Arn
+  QiitaTrendFunctionIamRole:
+    Description: Implicit IAM Role created for Hello World function
+    Value:
+      Fn::GetAtt:
+      - QiitaTrendFunctionRole
+      - Arn
 Resources:
   HelloWorldFunction:
     Properties:
@@ -39,5 +55,21 @@ Resources:
           Type: Api
       Handler: app.lambdaHandler
       Runtime: nodejs8.10
+    Type: AWS::Serverless::Function
+  QiitaTrendFunction:
+    Properties:
+      CodeUri: s3://sam-cli-helloworld-backet/ce0998cd0aa3a3f0c73b3e968d81188d
+      Environment:
+        Variables:
+          PARAM1: VALUE
+      Events:
+        QiitaTrend:
+          Properties:
+            Method: get
+            Path: /qiita
+          Type: Api
+      Handler: app.lambdaHandler
+      Runtime: nodejs8.10
+      Timeout: 60
     Type: AWS::Serverless::Function
 Transform: AWS::Serverless-2016-10-31
