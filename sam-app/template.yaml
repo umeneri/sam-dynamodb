@@ -36,6 +36,7 @@ Resources:
             CodeUri: qiita_trend/
             Handler: app.lambdaHandler
             Runtime: nodejs8.10
+            Timeout: 60
             Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
                 Variables:
                     PARAM1: VALUE
