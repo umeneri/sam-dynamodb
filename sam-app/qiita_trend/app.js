@@ -21,15 +21,20 @@ exports.lambdaHandler = async (event, context, callback) => {
     await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36')
 
     const articles = await qiitaTrend.getTrendArticles(page)
-
     const result = {result: 'OK', articles: articles };
 
-    console.log(result);
+    const response = {
+      statusCode: 200,
+      body: JSON.stringify(result)
+    }
 
-    return callback(null, result);
+    return response;
   } catch (err) {
     console.error(err)
-    return callback(null, JSON.stringify({ result: 'NG' }))
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ result: 'NG' })
+    }
   } finally {
     if (page) {
       await page.close()

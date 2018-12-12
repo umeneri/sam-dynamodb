@@ -1,5 +1,8 @@
 exports.getTrendArticles = async (page) => {
-  await page.goto('https://qiita.com')
+  console.log('getTrendArticles');
+  console.log(new Date());
+  await page.goto('https://qiita.com', { timeout: 60000, waitUntil: 'load'})
+  console.log(new Date());
   await page.waitFor(2000)
   return await page.evaluate(scrapeTrendArticles)
 }
