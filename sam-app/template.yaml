@@ -10,7 +10,6 @@ Globals:
     Function:
         Timeout: 3
 
-
 Resources:
 
     HelloWorldFunction:
@@ -37,16 +36,18 @@ Resources:
             Handler: app.lambdaHandler
             Runtime: nodejs8.10
             Timeout: 60
-            Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
-                Variables:
-                    PARAM1: VALUE
+            MemorySize: 1536
+            Environment:
+              Variables:
+                # DEBUG: "*"
+                PAGE_LOAD_TIMEOUT: 20000
+                LOGGING: true
             Events:
                 QiitaTrend:
                     Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
                     Properties:
                         Path: /qiita
                         Method: get
-
 
 Outputs:
 
@@ -63,14 +64,14 @@ Outputs:
       Value: !GetAtt HelloWorldFunctionRole.Arn
 
     QiitaTrendApi:
-      Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+      Description: "API Gateway endpoint URL for Prod stage for Qiita Trend function"
       Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
 
     QiitaTrendFunction:
-      Description: "Hello World Lambda Function ARN"
+      Description: "Qiita Trend Lambda Function ARN"
       Value: !GetAtt QiitaTrendFunction.Arn
 
     QiitaTrendFunctionIamRole:
-      Description: "Implicit IAM Role created for Hello World function"
+      Description: "Implicit IAM Role created for Qiita Trend function"
       Value: !GetAtt QiitaTrendFunctionRole.Arn
 
