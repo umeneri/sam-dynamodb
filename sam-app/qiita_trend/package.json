@@ -1,0 +1,14 @@
+{
+  "name": "qiita_trend",
+  "version": "1.0.0",
+  "main": "app.js",
+  "license": "MIT",
+  "dependencies": {
+    "@serverless-chrome/lambda": "^1.0.0-55",
+    "chrome-remote-interface": "^0.27.0",
+    "puppeteer": "^1.11.0"
+  },
+  "devDependencies": {
+    "chrome-launcher": "^0.10.5"
+  }
+}

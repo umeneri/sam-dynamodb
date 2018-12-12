@@ -4,12 +4,11 @@ Description: >
     sam-app
 
     Sample SAM Template for sam-app
-    
+
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
     Function:
         Timeout: 3
-
 
 Resources:
 
@@ -29,6 +28,27 @@ Resources:
                         Path: /hello
                         Method: get
 
+
+    QiitaTrendFunction:
+        Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+        Properties:
+            CodeUri: qiita_trend/
+            Handler: app.lambdaHandler
+            Runtime: nodejs8.10
+            Timeout: 60
+            MemorySize: 1536
+            Environment:
+              Variables:
+                # DEBUG: "*"
+                PAGE_LOAD_TIMEOUT: 20000
+                LOGGING: true
+            Events:
+                QiitaTrend:
+                    Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+                    Properties:
+                        Path: /qiita
+                        Method: get
+
 Outputs:
 
     HelloWorldApi:
@@ -42,3 +62,16 @@ Outputs:
     HelloWorldFunctionIamRole:
       Description: "Implicit IAM Role created for Hello World function"
       Value: !GetAtt HelloWorldFunctionRole.Arn
+
+    QiitaTrendApi:
+      Description: "API Gateway endpoint URL for Prod stage for Qiita Trend function"
+      Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
+
+    QiitaTrendFunction:
+      Description: "Qiita Trend Lambda Function ARN"
+      Value: !GetAtt QiitaTrendFunction.Arn
+
+    QiitaTrendFunctionIamRole:
+      Description: "Implicit IAM Role created for Qiita Trend function"
+      Value: !GetAtt QiitaTrendFunctionRole.Arn
+
