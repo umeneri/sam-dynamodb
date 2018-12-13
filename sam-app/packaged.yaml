@@ -40,4 +40,15 @@ Resources:
       Handler: app.lambdaHandler
       Runtime: nodejs8.10
     Type: AWS::Serverless::Function
+  UserDynamoDBTable:
+    Properties:
+      AttributeDefinitions:
+      - AttributeName: Id
+        AttributeType: N
+      BillingMode: PAY_PER_REQUEST
+      KeySchema:
+      - AttributeName: Id
+        KeyType: HASH
+      TableName: User
+    Type: AWS::DynamoDB::Table
 Transform: AWS::Serverless-2016-10-31

@@ -28,18 +28,19 @@ Resources:
                         Path: /hello
                         Method: get
 
-    # UserDynamoDBTable:
-    #     Type: AWS::Serverless::SimpleTable
-    #     Properties:
-    #       PrimaryKey:
-    #         Name: Id
-    #         Type: Number
-    #     # BillingMode: PAY_PER_REQUEST
-    #     ProvisionedThroughput:
-    #         ReadCapacityUnits: 1
-    #         WriteCapacityUnits: 1
-Outputs:
+    UserDynamoDBTable:
+        Type: AWS::DynamoDB::Table
+        Properties:
+            BillingMode: PAY_PER_REQUEST
+            AttributeDefinitions:
+                - AttributeName: Id
+                  AttributeType: N
+            TableName: User
+            KeySchema:
+                - AttributeName: Id
+                  KeyType: HASH
 
+Outputs:
     HelloWorldApi:
       Description: "API Gateway endpoint URL for Prod stage for Hello World function"
       Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
