@@ -28,6 +28,16 @@ Resources:
                         Path: /hello
                         Method: get
 
+    # UserDynamoDBTable:
+    #     Type: AWS::Serverless::SimpleTable
+    #     Properties:
+    #       PrimaryKey:
+    #         Name: Id
+    #         Type: Number
+    #     # BillingMode: PAY_PER_REQUEST
+    #     ProvisionedThroughput:
+    #         ReadCapacityUnits: 1
+    #         WriteCapacityUnits: 1
 Outputs:
 
     HelloWorldApi:
