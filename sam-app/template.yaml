@@ -28,6 +28,23 @@ Resources:
                         Path: /hello
                         Method: get
 
+    UserFunction:
+        Type: AWS::Serverless::Function
+        Properties:
+            CodeUri: user/
+            Handler: app.lambdaHandler
+            Runtime: nodejs8.10
+            Environment:
+                Variables:
+                    PARAM1: VALUE
+            Events:
+                User:
+                    Type: Api
+                    Properties:
+                        Path: /user
+                        Method: get
+
+
     UserDynamoDBTable:
         Type: AWS::DynamoDB::Table
         Properties:
