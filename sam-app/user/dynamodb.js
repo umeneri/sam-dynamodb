@@ -1,31 +1,23 @@
 const AWS = require('aws-sdk')
 
-var dynamoOpt = {
-  // apiVersion: '2012-08-10',
-  endpoint: "http://127.0.0.1:8000",
-  // region: 'ap-northeast-1',
-};
-var documentClient = new AWS.DynamoDB.DocumentClient(dynamoOpt);
-documentClient.scan({ TableName: 'User'}, (err, data) => {
-  console.log(err);
-  console.log(data);
-})
+class DynamoDBClient {
+  constructor() {
+    this.documentClient = new AWS.DynamoDB.DocumentClient({ endpoint: "http://192.168.100.185:8000" });
+    this.tableName = 'User';
+  }
 
-documentClient.get({ TableName: 'User', Key: { 'Id': 1 } }, (err, data) => {
-  console.log(err);
-  console.log(data);
-})
+  scan() {
+    return this.documentClient.scan({ TableName: this.tableName }).promise();
+  }
 
-const params = {
-  TableName: 'User',
-    "Item": {
-      "Id": 4,
-      "Name": "Foo2",
+  put(itemParams) {
+    const dbParams = {
+      TableName: this.tableName,
+      Item: itemParams,
     }
+
+    return this.documentClient.put(dbParams).promise();
+  }
 }
 
-documentClient.put(params, (err, data) => {
-  console.log(err);
-  console.log(data);
-})
-
+exports.DynamoDBClient = DynamoDBClient;
