@@ -2,7 +2,7 @@ const AWS = require('aws-sdk')
 
 class DynamoDBClient {
   constructor() {
-    this.documentClient = new AWS.DynamoDB.DocumentClient({ endpoint: "http://192.168.100.185:8000" });
+    this.documentClient = new AWS.DynamoDB.DocumentClient({ endpoint: process.env.DYNAMODB_ENDPOINT });
     this.tableName = 'User';
   }
 
