@@ -27,7 +27,7 @@ Outputs:
 Resources:
   HelloWorldFunction:
     Properties:
-      CodeUri: s3://sam-cli-helloworld-backet/7bf1672479101fc520c9c30f94114358
+      CodeUri: s3://sam-cli-helloworld-backet/dae4113ed353ee3e9659ba6757f4fc44
       Environment:
         Variables:
           PARAM1: VALUE
@@ -51,4 +51,24 @@ Resources:
         KeyType: HASH
       TableName: User
     Type: AWS::DynamoDB::Table
+  UsersFunction:
+    Properties:
+      CodeUri: s3://sam-cli-helloworld-backet/c5a08e27301f625e55c3ddf6c25a5d4f
+      Environment:
+        Variables:
+          PARAM1: VALUE
+      Events:
+        ListUser:
+          Properties:
+            Method: get
+            Path: /users
+          Type: Api
+        PutUser:
+          Properties:
+            Method: put
+            Path: /users/new
+          Type: Api
+      Handler: app.lambdaHandler
+      Runtime: nodejs8.10
+    Type: AWS::Serverless::Function
 Transform: AWS::Serverless-2016-10-31
