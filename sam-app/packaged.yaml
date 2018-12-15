@@ -53,10 +53,10 @@ Resources:
     Type: AWS::DynamoDB::Table
   UsersFunction:
     Properties:
-      CodeUri: s3://sam-cli-helloworld-backet/c5a08e27301f625e55c3ddf6c25a5d4f
+      CodeUri: s3://sam-cli-helloworld-backet/fb534e40bfe1528672c546bd80c669be
       Environment:
         Variables:
-          PARAM1: VALUE
+          DYNAMODB_ENDPOINT: ''
       Events:
         ListUser:
           Properties:
@@ -69,6 +69,8 @@ Resources:
             Path: /users/new
           Type: Api
       Handler: app.lambdaHandler
+      Policies: AmazonDynamoDBFullAccess
       Runtime: nodejs8.10
+      Tracing: Active
     Type: AWS::Serverless::Function
 Transform: AWS::Serverless-2016-10-31

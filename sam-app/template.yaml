@@ -34,6 +34,8 @@ Resources:
             CodeUri: users/
             Handler: app.lambdaHandler
             Runtime: nodejs8.10
+            Tracing: Active
+            Policies: AmazonDynamoDBFullAccess
             Environment:
                 Variables:
                     DYNAMODB_ENDPOINT: ""

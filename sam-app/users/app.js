@@ -2,6 +2,8 @@ const DynamoDB = require('./dynamodb')
 
 exports.lambdaHandler = async (event, context) => {
     try {
+      console.log(event);
+
       switch (event.httpMethod) {
         case "GET": {
           const dbOutput = await (new DynamoDB.DynamoDBClient).scan();
