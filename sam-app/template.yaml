@@ -28,34 +28,38 @@ Resources:
                         Path: /hello
                         Method: get
 
-    # UserFunction:
-    #     Type: AWS::Serverless::Function
-    #     Properties:
-    #         CodeUri: user/
-    #         Handler: app.lambdaHandler
-    #         Runtime: nodejs8.10
-    #         Environment:
-    #             Variables:
-    #                 PARAM1: VALUE
-    #         Events:
-    #             User:
-    #                 Type: Api
-    #                 Properties:
-    #                     Path: /user
-    #                     Method: get
-    #
-    #
-    # UserDynamoDBTable:
-    #     Type: AWS::DynamoDB::Table
-    #     Properties:
-    #         BillingMode: PAY_PER_REQUEST
-    #         AttributeDefinitions:
-    #             - AttributeName: Id
-    #               AttributeType: N
-    #         TableName: User
-    #         KeySchema:
-    #             - AttributeName: Id
-    #               KeyType: HASH
+    UsersFunction:
+        Type: AWS::Serverless::Function
+        Properties:
+            CodeUri: users/
+            Handler: app.lambdaHandler
+            Runtime: nodejs8.10
+            Environment:
+                Variables:
+                    PARAM1: VALUE
+            Events:
+                ListUser:
+                    Type: Api
+                    Properties:
+                        Path: /users
+                        Method: get
+                PutUser:
+                    Type: Api
+                    Properties:
+                        Path: /users/new
+                        Method: put
+
+    UserDynamoDBTable:
+        Type: AWS::DynamoDB::Table
+        Properties:
+            BillingMode: PAY_PER_REQUEST
+            AttributeDefinitions:
+                - AttributeName: Id
+                  AttributeType: N
+            TableName: User
+            KeySchema:
+                - AttributeName: Id
+                  KeyType: HASH
 
 Outputs:
     HelloWorldApi:

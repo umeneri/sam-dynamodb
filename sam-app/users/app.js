@@ -12,7 +12,8 @@ exports.lambdaHandler = async (event, context) => {
           };
         }
         case "PUT": {
-          const dbOutput = await (new DynamoDB.DynamoDBClient).put(event.body);
+          const body = JSON.parse(event.body);
+          const dbOutput = await (new DynamoDB.DynamoDBClient).put(body);
 
           return {
             "statusCode": 200,
