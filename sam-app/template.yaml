@@ -28,29 +28,42 @@ Resources:
                         Path: /hello
                         Method: get
 
-
-    QiitaTrendFunction:
-        Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    UsersFunction:
+        Type: AWS::Serverless::Function
         Properties:
-            CodeUri: qiita_trend/
+            CodeUri: users/
             Handler: app.lambdaHandler
             Runtime: nodejs8.10
-            Timeout: 60
-            MemorySize: 1536
+            Tracing: Active
+            Policies: AmazonDynamoDBFullAccess
             Environment:
-              Variables:
-                # DEBUG: "*"
-                PAGE_LOAD_TIMEOUT: 20000
-                LOGGING: true
+                Variables:
+                    DYNAMODB_ENDPOINT: ""
             Events:
-                QiitaTrend:
-                    Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+                ListUser:
+                    Type: Api
                     Properties:
-                        Path: /qiita
+                        Path: /users
                         Method: get
+                PutUser:
+                    Type: Api
+                    Properties:
+                        Path: /users/new
+                        Method: put
+
+    UserDynamoDBTable:
+        Type: AWS::DynamoDB::Table
+        Properties:
+            BillingMode: PAY_PER_REQUEST
+            AttributeDefinitions:
+                - AttributeName: Id
+                  AttributeType: N
+            TableName: User
+            KeySchema:
+                - AttributeName: Id
+                  KeyType: HASH
 
 Outputs:
-
     HelloWorldApi:
       Description: "API Gateway endpoint URL for Prod stage for Hello World function"
       Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
@@ -62,16 +75,3 @@ Outputs:
     HelloWorldFunctionIamRole:
       Description: "Implicit IAM Role created for Hello World function"
       Value: !GetAtt HelloWorldFunctionRole.Arn
-
-    QiitaTrendApi:
-      Description: "API Gateway endpoint URL for Prod stage for Qiita Trend function"
-      Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
-
-    QiitaTrendFunction:
-      Description: "Qiita Trend Lambda Function ARN"
-      Value: !GetAtt QiitaTrendFunction.Arn
-
-    QiitaTrendFunctionIamRole:
-      Description: "Implicit IAM Role created for Qiita Trend function"
-      Value: !GetAtt QiitaTrendFunctionRole.Arn
-
